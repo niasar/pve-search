@@ -80,10 +80,14 @@ func parseArray(arr []vm, vmid string, name string, state string, vmtype string)
 	if name == "" {
 		name = ".*"
 	}
-	reName := regexp.MustCompile(name)
-	reVmid := regexp.MustCompile(vmid)
-	reState := regexp.MustCompile(state)
-	reType := regexp.MustCompile(vmtype)
+	reName, err := regexp.Compile(name)
+	checkRegexp(err, name)
+	reVmid, err := regexp.Compile(vmid)
+	checkRegexp(err, vmid)
+	reState, err := regexp.Compile(state)
+	checkRegexp(err, state)
+	reType, err := regexp.Compile(vmtype)
+	checkRegexp(err, vmtype)
 	for i := range arr {
 		if reName.Match([]byte(arr[i].Name)) && reVmid.Match([]byte(fmt.Sprintf("%d", arr[i].Vmid))) && reState.Match([]byte(arr[i].Status)) && reType.Match([]byte(arr[i].Type)) {
 			result = append(result, arr[i])
@@ -95,7 +99,12 @@ func parseArray(arr []vm, vmid string, name string, state string, vmtype string)
 func sortArray(arr []vm, key *string, byAsc bool) []vm {
 	switch *key {
 	case "cpu":
-		sort.SliceStable(arr, func(i, j int) bool { return arr[i].CPU > arr[j].CPU })
+		if byAsc {
+			sort.SliceStable(arr, func(i, j int) bool { return arr[i].CPU > arr[j].CPU })
+		} else {
+			sort.SliceStable(arr, func(i, j int) bool { return arr[i].CPU < arr[j].CPU })
+		}
+
 	case "mem":
 		if byAsc {
 			sort.SliceStable(arr, func(i, j int) bool {
@@ -163,6 +172,12 @@ func printResult(arr []vm, toText bool) {
 	}
 }
 
+func checkRegexp(e error, exp string) {
+	if e != nil {
+		fmt.Println("Whoops...There something wronmg with your regexp! Please check following output. Your regexp was: ", exp)
+		panic(e)
+	}
+}
 func check(e error) {
 	if e != nil {
 		panic(e)
