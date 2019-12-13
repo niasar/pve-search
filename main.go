@@ -37,12 +37,13 @@ type vm struct {
 }
 
 func main() {
+	flag.Usage()
 	vmid := flag.String("vmid", ".*", "add vmid filter")
 	state := flag.String("state", ".*", "add state filter")
 	vmtype := flag.String("type", ".*", "add vm type filter")
-	toSort := flag.String("sort", "nosort", "sort resul by key (cpu, mem, disk, vmname, vmid, node)")
+	toSort := flag.String("sort", "nosort", "sort result by key (cpu, mem, disk, vmname, vmid, node)")
 	byAsc := flag.Bool("asc", false, "sort by ascending")
-	toText := flag.Bool("text", false, "Output in raw text")
+	toText := flag.Bool("text", false, "Output in plaint text (space separated)")
 	flag.Parse()
 	detectPVEcluster()
 	array := getVMarray()
