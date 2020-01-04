@@ -37,7 +37,6 @@ type vm struct {
 }
 
 func main() {
-	flag.Usage()
 	vmid := flag.String("vmid", ".*", "add vmid filter")
 	state := flag.String("state", ".*", "add state filter")
 	vmtype := flag.String("type", ".*", "add vm type filter")
