@@ -1,5 +1,5 @@
 ## Basic info
-When managing big Proxmox VE clusters its hard to remember on which node LXC/KCM instance is located. Of course, you can just use a web-interface to find it, but I think it would be nice to have the ability to do it from the terminal.
+When managing big Proxmox VE clusters its hard to remember on which node LXC/KVM instance is located. Of course, you can just use a web-interface to find it, but I think it would be nice to have the ability to do it from the terminal.
 
 ## Installation
 Just put binary anywhere you need it and give execution permission to it (`chmod +x`). To make it available system-wide you can just put it in someplace from your $PATH (ex. /usr/bin or /usr/local/bin).
